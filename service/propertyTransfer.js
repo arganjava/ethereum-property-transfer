@@ -6,7 +6,7 @@ const fs = require("fs"),
 const input = fs.readFileSync('./contracts/PropertyTransfer.sol');
 const output = solc.compile(input.toString(), 1);
 const bytecode = output.contracts[':PropertyTransfer'].bytecode;
-const abi = JSON.parse(output.contracts[':PropertyTransfer'].interface);
+const abi = JSON.parse(output.contracts[':PropertyTransfer'].interface); //this is ABI json to execute transaction in smartcontract
 
 const provider = new Web3.providers.HttpProvider(process.env.ETH_PRIVATE || process.env.ETH_DEVELOPMENT || "http://127.0.0.1:8545");
 const web3 = new Web3(provider);
@@ -81,6 +81,7 @@ propertyTransferContract.showAllProperties = async function(address){
         promisesAccount.push(
         new Promise((res, rej) => {
           PropertyTransfer.methods.getProperty(address, index).call().then(function functionName(data) {
+                console.info(data)
                  if(data['1'].toString().length > 0 && data['1'].toString() !== "Sold"){
                    let jsonData = {address:data['0'], name:data['1'], locationAddress:data['2'], district:data['3'], price:data['4'] };
                    res(jsonData);

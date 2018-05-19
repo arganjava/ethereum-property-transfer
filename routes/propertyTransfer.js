@@ -50,6 +50,7 @@ router.post('/sendEther', function(req, res, next) {
 
 router.post('/allotProperty', function(req, res, next) {
   let body = req.body
+  console.log("body allot", body);
   propertyTransfer.allotProperty(body,(err, data) =>{
     if(data){
       res.json(data);

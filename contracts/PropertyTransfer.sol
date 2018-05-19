@@ -18,7 +18,7 @@ contract PropertyTransfer {
     }
 
     /// This structure is kept like this for storing a lot more information than just the name
-    struct Property{
+    struct Property{ //this is improvement adding some field on constructor
         address owner;
         string name;//keeping the map of the property against each address. we shall provide name to the property
         string locationAddress;
@@ -46,6 +46,7 @@ contract PropertyTransfer {
         return totalNoOfProperty;
     }
 
+    //here i added method to get property with each address and index
     function getProperty(address addr, uint index) public view returns (address, string, string, string, uint, bool){
     Property prop = propertiesOwner[addr][index];
      return (prop.owner, prop.name,
@@ -60,11 +61,12 @@ contract PropertyTransfer {
      onlyOwner
     {
 
+        //this improve the body method
         individualCountOfPropertyPerOwner[_verifiedOwner]++;
         propertiesOwner[_verifiedOwner][individualCountOfPropertyPerOwner[_verifiedOwner]].owner = _verifiedOwner;
         propertiesOwner[_verifiedOwner][individualCountOfPropertyPerOwner[_verifiedOwner]].name = _propertyName;
-        propertiesOwner[_verifiedOwner][individualCountOfPropertyPerOwner[_verifiedOwner]].locationAddress = _propertyName;
-        propertiesOwner[_verifiedOwner][individualCountOfPropertyPerOwner[_verifiedOwner]].district = _propertyName;
+        propertiesOwner[_verifiedOwner][individualCountOfPropertyPerOwner[_verifiedOwner]].locationAddress = _location;
+        propertiesOwner[_verifiedOwner][individualCountOfPropertyPerOwner[_verifiedOwner]].district = _district;
         propertiesOwner[_verifiedOwner][individualCountOfPropertyPerOwner[_verifiedOwner]].price = _price;
         totalNoOfProperty++;
         emit PropertyAlloted(_verifiedOwner,individualCountOfPropertyPerOwner[_verifiedOwner], _propertyName, "property allotted successfully");
