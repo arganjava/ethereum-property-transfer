@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <script src="/javascripts/jquery-1.11.2.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="/javascripts/angular.min.js"></script>
+    <script src="/javascripts/propertyTransfer.js"></script>
+  </head>
+  <body ng-app="ethereum" ng-controller="PropertyTransferController">
+<div class="container"><h2>Ethereum Property Transfer </h2></div>
+
+<div id="exTab2" class="container">
+<ul class="nav nav-tabs">
+			<li class="active">
+        <a  href="#1" data-toggle="tab">Accounts</a>
+			</li>
+			<li><a href="#2" data-toggle="tab">Properties</a>
+			</li>
+			<li><a href="#3" data-toggle="tab">Transfer</a>
+			</li>
+		</ul>
+
+			<div class="tab-content ">
+			  <div class="tab-pane active" id="1">
+          <div class="new col-md-4">
+            <h3>Create new account</h3>
+            <form action="#" role="form">
+              <div class="form-group">
+                <input type="password" class="form-control" ng-model="account.password" placeholder="password" name="password">
+              </div>
+
+              <div class="form-group">
+                <input type="password" class="form-control" ng-model="account.passwordConfirm" placeholder="Confirm password" name="passwordConfirm">
+              </div>
+              <input type="button" value="Submit" class="btn btn-success" ng-click="submitCreateAccount()">
+            </form>
+          </div>
+          <div class="new col-md-4">
+            <h3>Send ether to</h3>
+            <form action="#" role="form">
+              <div class="form-group">
+                <select class="form-control" ng-model="sendEther.adsressTo" ng-options="account.address as account.address for account in listData">
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control" ng-model="sendEther.value" placeholder="Amount" name="amount">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" ng-model="sendEther.password" placeholder="Enter your password" name="password">
+              </div>
+              <input type="button" value="Submit" class="btn btn-success" ng-click="submitSendEther()">
+            </form>
+          </div>
+          <div class="row">
+            <div class="col-md-6"><br></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6"><br></div>
+          </div>
+            <div class="row container col-md-6">
+              <div class='table'>
+                  <table class='table table-hover table-condensed'>
+              <tr>
+              <th class="col-md-2"> Account Address </th>
+              <th class="col-md-2"> Balance</th>
+              </tr>
+              <tr ng-repeat="account in listData">
+              <td class="col-md-2">{{account.address}}</td>
+              <td class="col-md-2">{{account.balance}}</td>
+              </tr>
+              </table>
+              </div>
+           </div>
+				</div>
+				<div class="tab-pane" id="2">
+          <div class="new col-md-4">
+          <h3>Transfer Property</h3>
+          <form action="#" method="POST" role="form">
+            <div class="form-group">
+              <select class="form-control" ng-model="allotProperty.owner" ng-options="account.address as account.address for account in listData">
+              </select>
+            </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Name" ng-model="allotProperty.name">
+              </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Location" ng-model="allotProperty.addressProp">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="District" ng-model="allotProperty.district">
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control" placeholder="Price" ng-model="allotProperty.price">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Your password" ng-model="allotProperty.password">
+            </div>
+            <input type="button" ng-click="submitAllotProperty()" value="Submit" class="btn btn-success">
+          </form>
+        </div>
+        <div class="row">
+          <div class="col-md-6"><br></div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"><br></div>
+        </div>
+				</div>
+        <div class="tab-pane" id="3">
+          <div class="new col-md-12">
+          <h3>Allot Property to</h3>
+          <form action="#" method="POST" role="form">
+            <div class="new col-md-5">
+            <div class="form-group">
+              Property Sender Address
+              <select class="form-control" ng-select="showAllProperties()" ng-model="transferProperty.addressFrom" ng-options="account.address as account.address for account in listData">
+              </select>
+            </div>
+                    </div>
+                      <div class="new col-md-5">
+              <div class="form-group">
+                Property Receiver Address
+                <select class="form-control" ng-model="transferProperty.addressTo" ng-options="account.address as account.address for account in listData">
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6"></div>
+            </div>
+            <div class="new col-md-5">
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="From address password" ng-model="transferProperty.password">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6"><br></div>
+          </div>
+
+          </form>
+
+        <div class="row">
+          <div class="col-md-6"><br></div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"><br></div>
+        </div>
+          <div class="container col-md-12">
+            <div class='table'>
+                <table class='table table-hover table-condensed'>
+            <tr>
+            <th class="col-md-2"> Account Address </th>
+            <th class="col-md-2"> Name</th>
+            <th class="col-md-2"> Location</th>
+            <th class="col-md-2"> District</th>
+            <th class="col-md-2"> Price</th>
+            <th ng-if="properties.length > 0" >Action</th>
+            </tr>
+            <tr data-model="user" ng-repeat="property in properties track by $id($index)">
+            <td class="col-md-2">{{property.address}}</td>
+            <th class="col-md-2">{{property.name}}</th>
+            <th class="col-md-2">{{property.locationAddress}}</th>
+            <th class="col-md-2">{{property.district}}</th>
+            <th class="col-md-2">{{property.price}}</th>
+            <td class="col-md-2" ng-if="property.address">
+              <input type="button" ng-click="submitTransferProperty(property.name)" value="Transfer" class="btn btn-success">
+            </td>
+            </tr>
+            </table>
+            </div>
+         </div>
+				</div>
+			</div>
+  </div>
+</html>
